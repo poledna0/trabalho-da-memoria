@@ -58,4 +58,3 @@ if __name__ == "__main__":
             print(contagem_de_socorro)
         else:
             print('Vocẽ ja usou o maximo de ajudas, boa sorte.')
-            break
