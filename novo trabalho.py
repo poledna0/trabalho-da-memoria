@@ -1,41 +1,51 @@
 import random
 
-def pop_pobre (vetor, numero):
+def pop_pobre(lista, elemento):
     nova_lista = []
-    for numero_da_lista in vetor:
-        if numero_da_lista != numero:
-            nova_lista.append(numero_da_lista)
+    for item in lista:
+        if item != elemento:
+            nova_lista.append(item)
     return nova_lista
 
-def existe (vetor,numero):
-    for n in vetor:
-        if n == numero:
-            return True
-    return False
+def meu_pop(lista, indice):
+    elemento_removido = lista[indice]
+    nova_lista = lista[:indice] + lista[indice+1:]
+    return nova_lista
+
+# def existe (vetor,numero):
+#     for n in vetor:
+#         if n == numero:
+#             return True
+#     return False
+
+#def faz_o_quadrante()
 
 def quadrante(dificuldade, quantidade_de_letra):
-    # obra de arte do semestre : 
-    alfabeto_original = list(range(65,91))
-    alfabeto_aleatorio = []
-    vetor_clone = []
-    for _ in range(quantidade_de_letra):
-        #escolhe o indice para pegar um numero do alfabeto original
-        indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
-        # transforma em letra
-        letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
-        # add a letra em um vetor
-        alfabeto_aleatorio.append(letra_aleatoria)
-        # ele apaga o numero q pegou da lista principal para n pegar dnv
-        lista_nova = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
-        # atualiza o alfabeto orig
-        alfabeto_original = lista_nova
-    print(alfabeto_aleatorio)
-    print(alfabeto_original)
-    vetor_clone += alfabeto_aleatorio
-    print(vetor_clone)
-    quadrante_origina = list(range(dificuldade)for _ in range(dificuldade))
-    print(quadrante_origina)
-
+    if dificuldade == 4 or dificuldade == 6:
+        alfabeto_original = list(range(65,91))
+        alfabeto_aleatorio = []
+        for _ in range(quantidade_de_letra):
+            indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
+            letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
+            alfabeto_aleatorio.append(letra_aleatoria)
+            alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
+        alfabeto_aleatorio += alfabeto_aleatorio
+        quadrante_original = [[ 0 for _ in range(dificuldade)] for _ in range(dificuldade)]
+        
+        for linha in range(len(quadrante_original)):
+            for coluna in range(len(quadrante_original)):
+                if len(alfabeto_aleatorio) > 0:
+                    indice_aleatorio_quadrante = random.randint(0,(len(alfabeto_aleatorio)-1))
+                    quadrante_original[linha][coluna] = alfabeto_aleatorio[indice_aleatorio_quadrante]
+                    alfabeto_aleatorio = meu_pop(alfabeto_aleatorio,indice_aleatorio_quadrante)
+                    
+        for l in range(len(quadrante_original)):
+            for c in range(len(quadrante_original)):
+                print(quadrante_original[l][c],' ', end='')
+            print('')
+        return quadrante_original
+    else:
+        print('meu pai ta duro!')
 def ler_entrada():
     vetor = []
     for _ in range(2):
@@ -57,13 +67,14 @@ if __name__ == "__main__":
     escolhendo_a_dificulade = 0#int(input('Digite a dificulade: facil-1 , medio-2 , dificil-3: '))
 
     if escolhendo_a_dificulade == 1:
-         dificul_escolhida = 2
+        dificul_escolhida, numero_letra = 4 , 8
     elif escolhendo_a_dificulade == 2:
-         dificul_escolhida = 3
-    else:
-         dificul_escolhida = 4
+        dificul_escolhida, numero_letra = 6 , 18
+    else:        
+        dificul_escolhida, numero_letra = 8 , 32
+ 
     
-    quadrante(4,8)
-
+    quadrante(6,18)
     #while True:
         #ler_entrada()
+    
