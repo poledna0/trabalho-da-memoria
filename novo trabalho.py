@@ -67,10 +67,10 @@ def ler_entrada(tabu):
         vetor_ind.append(coluna_entrada)
 # "Faz isso em C para vc ver oq acontece.... python é uma merda mesmo" - Andre , maio-2024
     if vetor_ind[0] == vetor_ind[1] == vetor_ind[2] == vetor_ind[3]:
-        print('vai ser ixperto na cadeia')
-        None
+        print('Não pode ser a mesma posição')
     else:
-        vetor_let.append(tabu[vetor_ind[0]][vetor_ind[1]])
+        if tabu[vetor_ind[0]][vetor_ind[1]] == tabu[vetor_ind[2]][vetor_ind[3]]:
+            vetor_let.append(tabu[vetor_ind[0]][vetor_ind[1]])
     return vetor_let
 
 def esconde_matriz(tabuleiro, vetor_com_letrinhas): 
@@ -82,8 +82,8 @@ def esconde_matriz(tabuleiro, vetor_com_letrinhas):
     mostar_tabuleiro(tabuleiro_escondido)        
 
 def socorro(variavel,tabuleiro):
-    entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
-    if entrada == 1:
+    entrada = input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>')
+    if entrada == '1':
         mostar_tabuleiro(tabuleiro)
         variavel += 1
     return variavel   
@@ -98,9 +98,9 @@ if __name__ == "__main__":
         dificul_escolhida, numero_letra = 6 , 18
     else:        
         dificul_escolhida, numero_letra = 8 , 32
-
     quadrante = alfabeto(dificul_escolhida,numero_letra)
-    vetor_com_letras += ler_entrada(quadrante)
-    esconde_matriz(quadrante,vetor_com_letras)
-    if contador_de_ajuda < 3: 
-        contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
+    while True:
+        vetor_com_letras += ler_entrada(quadrante)
+        esconde_matriz(quadrante,vetor_com_letras)
+        if contador_de_ajuda < 3: 
+            contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
