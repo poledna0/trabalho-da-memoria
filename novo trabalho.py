@@ -3,6 +3,12 @@
 import random
 import time
 
+def mostar_tabuleiro(tabuleiro):
+    for linha in range(len(tabuleiro)):
+        for coluna in range(len(tabuleiro)):
+            print(tabuleiro[linha][coluna],' ', end='')
+        print('')
+
 def pop_pobre(lista, elemento):
     nova_lista = []
     for item in lista:
@@ -36,7 +42,6 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
         alfabeto_aleatorio.append(letra_aleatoria)
         alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
     alfabeto_aleatorio += alfabeto_aleatorio
-
     return alfabeto_aleatorio
 
 def alfabeto (dificuldade, quantidade_de_letra):
@@ -74,18 +79,12 @@ def esconde_matriz(tabuleiro, vetor_com_letrinhas):
         for c in range(len(tabuleiro)):
             if tabuleiro[l][c] in vetor_com_letrinhas:
                 tabuleiro_escondido[l][c] = tabuleiro[l][c]
-    for linha in range(len(tabuleiro_escondido)):
-        for coluna in range(len(tabuleiro_escondido)):
-            print(tabuleiro_escondido[linha][coluna], ' ', end='')
-        print(' ')        
+    mostar_tabuleiro(tabuleiro_escondido)        
 
 def socorro(variavel,tabuleiro):
     entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
     if entrada == 1:
-        for linha in range(len(tabuleiro)):
-            for coluna in range(len(tabuleiro)):
-                print(tabuleiro[linha][coluna],' ', end='')
-            print('')
+        mostar_tabuleiro(tabuleiro)
         variavel += 1
     return variavel   
    
