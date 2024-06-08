@@ -12,9 +12,7 @@ def meu_pop(lista, indice):
     nova_lista = lista[:indice] + lista[indice+1:]
     return nova_lista
 
-
 def faz_o_quadrante(dificuldade, alfabeto_copia):
-    
     quadrante_original = [[ 0 for _ in range(dificuldade)] for _ in range(dificuldade)]
     for linha in range(len(quadrante_original)):
         for coluna in range(len(quadrante_original)):
@@ -26,21 +24,26 @@ def faz_o_quadrante(dificuldade, alfabeto_copia):
         print('')
     return quadrante_original
 
-def alfabeto(dificuldade, quantidade_de_letra):
+def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
+    alfabeto_original = list(range(65,91))
     alfabeto_aleatorio = []
+    for _ in range(quantidade_de_letra):
+        indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
+        letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
+        alfabeto_aleatorio.append(letra_aleatoria)
+        alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
+    alfabeto_aleatorio += alfabeto_aleatorio
+    faz_o_quadrante(dificuldade, alfabeto_aleatorio)
+    return alfabeto_aleatorio
+
+def alfabeto (dificuldade, quantidade_de_letra):
+    
     if dificuldade == 4 or dificuldade == 6:
-        alfabeto_original = list(range(65,91))
-        for _ in range(quantidade_de_letra):
-            indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
-            letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
-            alfabeto_aleatorio.append(letra_aleatoria)
-            alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
-        alfabeto_aleatorio += alfabeto_aleatorio
-        faz_o_quadrante(dificuldade, alfabeto_aleatorio)
-        return alfabeto_aleatorio
+        v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
     else:
-        alfabeto_original = list(range(65,91))
-        alfabeto_original += ['0','1','2','3','4','5']
+        v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
+        v += ['0','1','2','3','4','5']
+    return v
         
 def ler_entrada():
     vetor = []
