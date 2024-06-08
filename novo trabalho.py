@@ -7,24 +7,34 @@ def pop_pobre (vetor, numero):
             nova_lista.append(numero_da_lista)
     return nova_lista
 
-def quadrante(dificuldade):
-
-    alfabeto_original = list(range(65,91))
-    alfabeto_aleatorio = []
-    for _ in range(26):
-        indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
-        letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
-        alfabeto_aleatorio.append(letra_aleatoria)
-        lista_nova = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
-        alfabeto_original = lista_nova  # Atualiza alfabeto_original
-    print(alfabeto_aleatorio)
-    print(alfabeto_original)
-
 def existe (vetor,numero):
     for n in vetor:
         if n == numero:
             return True
     return False
+
+def quadrante(dificuldade, quantidade_de_letra):
+    # obra de arte do semestre : 
+    alfabeto_original = list(range(65,91))
+    alfabeto_aleatorio = []
+    vetor_clone = []
+    for _ in range(quantidade_de_letra):
+        #escolhe o indice para pegar um numero do alfabeto original
+        indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
+        # transforma em letra
+        letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
+        # add a letra em um vetor
+        alfabeto_aleatorio.append(letra_aleatoria)
+        # ele apaga o numero q pegou da lista principal para n pegar dnv
+        lista_nova = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
+        # atualiza o alfabeto orig
+        alfabeto_original = lista_nova
+    print(alfabeto_aleatorio)
+    print(alfabeto_original)
+    vetor_clone += alfabeto_aleatorio
+    print(vetor_clone)
+    quadrante_origina = list(range(dificuldade)for _ in range(dificuldade))
+    print(quadrante_origina)
 
 def ler_entrada():
     vetor = []
@@ -44,17 +54,16 @@ def ler_entrada():
 
 if __name__ == "__main__":
 
-    # escolhendo_a_dificulade = int(input('Digite a dificulade: facil-1 , medio-2 , dificil-3: '))
+    escolhendo_a_dificulade = 0#int(input('Digite a dificulade: facil-1 , medio-2 , dificil-3: '))
 
-    # if escolhendo_a_dificulade == 1:
-    #     dificul_escolhida = 2
-    # elif escolhendo_a_dificulade == 2:
-    #     dificul_escolhida = 3
-    # else:
-    #     dificul_escolhida = 4
-
-    # quadrante(dificul_escolhida)
-    quadrante(4)
+    if escolhendo_a_dificulade == 1:
+         dificul_escolhida = 2
+    elif escolhendo_a_dificulade == 2:
+         dificul_escolhida = 3
+    else:
+         dificul_escolhida = 4
+    
+    quadrante(4,8)
 
     #while True:
         #ler_entrada()
