@@ -1,4 +1,7 @@
+# Henrique Poledna, Eduardo Machado, Leonardo de Goes da Silva, Luis Hiroyuki
+
 import random
+import time
 
 def pop_pobre(lista, elemento):
     nova_lista = []
@@ -8,7 +11,7 @@ def pop_pobre(lista, elemento):
     return nova_lista
 
 def meu_pop(lista, indice):
-    elemento_removido = lista[indice]
+    lista[indice]
     nova_lista = lista[:indice] + lista[indice+1:]
     return nova_lista
 
@@ -33,41 +36,76 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
         alfabeto_aleatorio.append(letra_aleatoria)
         alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
     alfabeto_aleatorio += alfabeto_aleatorio
-    faz_o_quadrante(dificuldade, alfabeto_aleatorio)
+
     return alfabeto_aleatorio
 
 def alfabeto (dificuldade, quantidade_de_letra):
     
     if dificuldade == 4 or dificuldade == 6:
         v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
+        batata = faz_o_quadrante(dificuldade, v)
     else:
+        quantidade_de_letra = 26
         v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
-        v += ['0','1','2','3','4','5']
-    return v
+        v += ['0','0','1','1','2','2','3','3','4','4','5','5']
+        batata = faz_o_quadrante(dificuldade, v)
+    return batata
         
-def ler_entrada():
-    vetor = []
+def ler_entrada(tabu):
+    vetor_ind = []
+    vetor_let = []
     for _ in range(2):
         linha_entrada = int(input('Digite uma linha: '))
         coluna_entrada = int(input('Digite uma coluna: '))
-        vetor.append(linha_entrada)
-        vetor.append(coluna_entrada)
-    return vetor
+        print('')
+        vetor_ind.append(linha_entrada)
+        vetor_ind.append(coluna_entrada)
+# "Faz isso em C para vc ver oq acontece.... python é uma merda mesmo" - Andre , maio-2024
+    if vetor_ind[0] == vetor_ind[1] == vetor_ind[2] == vetor_ind[3]:
+        print('vai ser ixperto na cadeia')
+        None
+    else:
+        vetor_let.append(tabu[vetor_ind[0]][vetor_ind[1]])
+    return vetor_let
 
+def esconde_matriz(tabuleiro, vetor_com_letrinhas): 
+    tabuleiro_mascarado = [['#' for _ in range(len(tabuleiro))] for _ in range(len(tabuleiro))]
+    for l in range(len(tabuleiro)):
+        for c in range(len(tabuleiro)):
+            if tabuleiro[l][c] in vetor_com_letrinhas:
+                tabuleiro_mascarado[l][c] = tabuleiro[l][c]
+    for linha in range(len(tabuleiro_mascarado)):
+        for coluna in range(len(tabuleiro_mascarado)):
+            print(tabuleiro_mascarado[linha][coluna], ' ', end='')
+        print(' ')        
+
+                
+def existe (vetor,numero):
+    for n in vetor:
+        if n == numero:
+            return True
+    return False
+            
+            
 
 if __name__ == "__main__":
-
-    escolhendo_a_dificulade = 0#int(input('Digite a dificulade: facil-1 , medio-2 , dificil-3: '))
-
+    escolhendo_a_dificulade =int(input('Digite a dificulade:\n[1] Fácil\n[2] Médio\n[3] Hardcore\n>>>'))
+    vetor_com_letras = []
     if escolhendo_a_dificulade == 1:
         dificul_escolhida, numero_letra = 4 , 8
     elif escolhendo_a_dificulade == 2:
         dificul_escolhida, numero_letra = 6 , 18
     else:        
         dificul_escolhida, numero_letra = 8 , 32
- 
+
+    quadrante = alfabeto(dificul_escolhida,numero_letra)
     
-    alfabeto(6,18)
-    #while True:
-        #ler_entrada()
-    
+    while True:
+        vetor_com_letras += ler_entrada(quadrante)
+        print(vetor_com_letras)
+        esconde_matriz(quadrante,vetor_com_letras)
+    #esconde_matriz(quadrante)
+        # for linha in range(len(quadrante)):
+        #     for coluna in range(len(quadrante)):
+        #         print(quadrante[linha][coluna],' ', end='')
+        #     print(' ')
