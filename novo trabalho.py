@@ -69,28 +69,30 @@ def ler_entrada(tabu):
     return vetor_let
 
 def esconde_matriz(tabuleiro, vetor_com_letrinhas): 
-    tabuleiro_mascarado = [['#' for _ in range(len(tabuleiro))] for _ in range(len(tabuleiro))]
+    tabuleiro_escondido = [['#' for _ in range(len(tabuleiro))] for _ in range(len(tabuleiro))]
     for l in range(len(tabuleiro)):
         for c in range(len(tabuleiro)):
             if tabuleiro[l][c] in vetor_com_letrinhas:
-                tabuleiro_mascarado[l][c] = tabuleiro[l][c]
-    for linha in range(len(tabuleiro_mascarado)):
-        for coluna in range(len(tabuleiro_mascarado)):
-            print(tabuleiro_mascarado[linha][coluna], ' ', end='')
+                tabuleiro_escondido[l][c] = tabuleiro[l][c]
+    for linha in range(len(tabuleiro_escondido)):
+        for coluna in range(len(tabuleiro_escondido)):
+            print(tabuleiro_escondido[linha][coluna], ' ', end='')
         print(' ')        
 
-                
-def existe (vetor,numero):
-    for n in vetor:
-        if n == numero:
-            return True
-    return False
-            
-            
-
+def socorro(variavel,tabuleiro):
+    entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
+    if entrada == 1:
+        for linha in range(len(tabuleiro)):
+            for coluna in range(len(tabuleiro)):
+                print(tabuleiro[linha][coluna],' ', end='')
+            print('')
+        variavel += 1
+    return variavel   
+   
 if __name__ == "__main__":
     escolhendo_a_dificulade =int(input('Digite a dificulade:\n[1] Fácil\n[2] Médio\n[3] Hardcore\n>>>'))
     vetor_com_letras = []
+    contador_de_ajuda = 0
     if escolhendo_a_dificulade == 1:
         dificul_escolhida, numero_letra = 4 , 8
     elif escolhendo_a_dificulade == 2:
@@ -99,13 +101,7 @@ if __name__ == "__main__":
         dificul_escolhida, numero_letra = 8 , 32
 
     quadrante = alfabeto(dificul_escolhida,numero_letra)
-    
-    while True:
-        vetor_com_letras += ler_entrada(quadrante)
-        print(vetor_com_letras)
-        esconde_matriz(quadrante,vetor_com_letras)
-    #esconde_matriz(quadrante)
-        # for linha in range(len(quadrante)):
-        #     for coluna in range(len(quadrante)):
-        #         print(quadrante[linha][coluna],' ', end='')
-        #     print(' ')
+    vetor_com_letras += ler_entrada(quadrante)
+    esconde_matriz(quadrante,vetor_com_letras)
+    if contador_de_ajuda < 3: 
+        contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
