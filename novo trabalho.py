@@ -1,37 +1,30 @@
 import random
 
-# def quadrante(dificul): # pensei em ainda deixar em ascii e fazer um ocntador que vai colocar a mesma letra se o contador estiver em 1, quando chegar em dois ele gera outro numero ascii
-#     alfabeto_aleatorio = []
+def pop_pobre (vetor, numero):
+    nova_lista = []
+    for numero_da_lista in vetor:
+        if numero_da_lista != numero:
+            nova_lista.append(numero_da_lista)
+    return nova_lista
 
-#     while len(alfabeto_aleatorio) < dificul:
-#         numero_aleatorio = random.randint(65,90)
-#         if existe(alfabeto_aleatorio, numero_aleatorio):
-#             None
-#         else:
-#             alfabeto_aleatorio.append(numero_aleatorio)
-#     for indice, numero in enumerate (alfabeto_aleatorio):
-#         alfabeto_aleatorio[indice] = chr(numero)
+def quadrante(dificuldade):
 
-#     print(alfabeto_aleatorio)
-# def existe (vetor,numero):
-#     for n in vetor:
-#         if n == numero:
-#             return True
-#     return False
-# def quadrante(dific):
-#     quadrante1 = [[random.randint(0, 24) for _ in range(dific)] for _ in range(dific)]
-#     print(quadrante1)
-#     quadrante2 = [[elemento for elemento in linha] for linha in quadrante1]
-#     print(quadrante2)
-#     quadrante_final = [[], []]
-#     quadrante_final[0] = quadrante1
-#     quadrante_final[1] = quadrante2
-#     print(quadrante_final)
+    alfabeto_original = list(range(65,91))
+    alfabeto_aleatorio = []
+    for _ in range(26):
+        indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
+        letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
+        alfabeto_aleatorio.append(letra_aleatoria)
+        lista_nova = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
+        alfabeto_original = lista_nova  # Atualiza alfabeto_original
+    print(alfabeto_aleatorio)
+    print(alfabeto_original)
 
-#----------------------------------------------------------------------------------------------------------------------------
-# Percorrer um range de 65 até 90 e depois um rande de 1 - x(definida na variavel de dificulade) dando um total de 32 "figuras", cada figura precisa de duas localizações com random e o random nao pode se repetir mais do que uma vez
-#----------------------------------------------------------------------------------------------------------------------------
-
+def existe (vetor,numero):
+    for n in vetor:
+        if n == numero:
+            return True
+    return False
 
 def ler_entrada():
     vetor = []
@@ -41,6 +34,13 @@ def ler_entrada():
         vetor.append(linha_entrada)
         vetor.append(coluna_entrada)
     return vetor
+
+#----------------------------------------------------------------------------------------------------------------------------
+# Percorrer um range de 65 até 90 e depois um rande de 1 - x(definida na variavel de dificulade) dando um total de 32 "figuras", cada figura precisa de duas localizações com random e o random nao pode se repetir mais do que uma vez
+#----------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 if __name__ == "__main__":
 
@@ -58,4 +58,3 @@ if __name__ == "__main__":
 
     #while True:
         #ler_entrada()
-        
