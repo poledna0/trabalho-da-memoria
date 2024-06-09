@@ -60,7 +60,7 @@ def ler_entrada(tabu):
         print('')
         vetor_ind.append(linha_entrada)
         vetor_ind.append(coluna_entrada)
-# "Faz isso em C para vc ver oq acontece.... python é uma merda mesmo" - Andre , maio-2024
+######################"Faz isso em C para vc ver oq acontece.... python é uma merda mesmo" - Andre , maio-2024###############################################################################
     if vetor_ind[0] == vetor_ind[1] == vetor_ind[2] == vetor_ind[3]:
         print('Não pode ser a mesma posição')
     else:
