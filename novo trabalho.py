@@ -3,12 +3,6 @@
 import random
 import time
 
-def mostar_tabuleiro(tabuleiro):
-    for linha in range(len(tabuleiro)):
-        for coluna in range(len(tabuleiro)):
-            print(tabuleiro[linha][coluna],' ', end='')
-        print('')
-
 def pop_pobre(lista, elemento):
     nova_lista = []
     for item in lista:
@@ -42,6 +36,7 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
         alfabeto_aleatorio.append(letra_aleatoria)
         alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
     alfabeto_aleatorio += alfabeto_aleatorio
+
     return alfabeto_aleatorio
 
 def alfabeto (dificuldade, quantidade_de_letra):
@@ -79,12 +74,19 @@ def esconde_matriz(tabuleiro, vetor_com_letrinhas):
         for c in range(len(tabuleiro)):
             if tabuleiro[l][c] in vetor_com_letrinhas:
                 tabuleiro_escondido[l][c] = tabuleiro[l][c]
-    mostar_tabuleiro(tabuleiro_escondido)        
+    for linha in range(len(tabuleiro_escondido)):
+        for coluna in range(len(tabuleiro_escondido)):
+            print(tabuleiro_escondido[linha][coluna], ' ', end='')
+        print(' ')        
 
 def socorro(variavel,tabuleiro):
-    entrada = input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>')
-    if entrada == '1':
-        mostar_tabuleiro(tabuleiro)
+    entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
+    if entrada == 1:
+        for linha in range(len(tabuleiro)):
+            for coluna in range(len(tabuleiro)):
+                print(tabuleiro[linha][coluna],' ', end='')
+            print('')
+        time.sleep(5)
         variavel += 1
     return variavel   
    
@@ -99,8 +101,15 @@ if __name__ == "__main__":
     else:        
         dificul_escolhida, numero_letra = 8 , 32
     quadrante = alfabeto(dificul_escolhida,numero_letra)
+    time.sleep(5)
+    print('\033c', end='')
+    
     while True:
         vetor_com_letras += ler_entrada(quadrante)
         esconde_matriz(quadrante,vetor_com_letras)
         if contador_de_ajuda < 3: 
             contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
+            print('\033c', end='')
+        if len(vetor_com_letras) == numero_letra:
+            print('Parabéns, você venceu!')
+            break
