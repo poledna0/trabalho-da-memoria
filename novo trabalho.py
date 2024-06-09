@@ -1,4 +1,4 @@
-# Henrique Poledna, Eduardo Machado, Leonardo de Goes da Silva, Luis Hiroyuki
+# Henrique Poledna, Eduardo Machado, Leonardo de Goes da Silva, Luis Henrique Hiroyuki
 
 import random
 import time
@@ -42,14 +42,14 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
 def alfabeto (dificuldade, quantidade_de_letra):
     
     if dificuldade == 4 or dificuldade == 6:
-        v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
-        batata = faz_o_quadrante(dificuldade, v)
+        vet = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
+        somavet = faz_o_quadrante(dificuldade, vet)
     else:
         quantidade_de_letra = 26
-        v = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
-        v += ['0','0','1','1','2','2','3','3','4','4','5','5']
-        batata = faz_o_quadrante(dificuldade, v)
-    return batata
+        vet = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
+        vet += ['0','0','1','1','2','2','3','3','4','4','5','5']
+        somavet = faz_o_quadrante(dificuldade, vet)
+    return somavet
         
 def ler_entrada(tabu):
     vetor_ind = []
@@ -86,9 +86,17 @@ def socorro(variavel,tabuleiro):
             for coluna in range(len(tabuleiro)):
                 print(tabuleiro[linha][coluna],' ', end='')
             print('')
-        time.sleep(5)
+        time.sleep(3)
         variavel += 1
     return variavel   
+
+def desisti():
+    desistir = int(input('Deseja desistir?\n[1] Sim\n[2] Não\n>>>'))
+    if desistir == 1:
+        print('Fim de Joggo')
+        return True
+    else:
+        return False
    
 if __name__ == "__main__":
     escolhendo_a_dificulade =int(input('Digite a dificulade:\n[1] Fácil\n[2] Médio\n[3] Hardcore\n>>>'))
@@ -110,6 +118,9 @@ if __name__ == "__main__":
         if contador_de_ajuda < 3: 
             contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
             print('\033c', end='')
+            esconde_matriz(quadrante,vetor_com_letras)
         if len(vetor_com_letras) == numero_letra:
             print('Parabéns, você venceu!')
+            break
+        if desisti():
             break
