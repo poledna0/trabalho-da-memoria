@@ -19,8 +19,7 @@ def pop_pobre(lista, elemento, indice, qual_pop):
     else:
         nova_lista = lista[:indice] + lista[indice+1:]
         return nova_lista
-
-
+    
 def faz_o_quadrante(dificuldade, alfabeto_copia):
     quadrante_original = [[ 0 for _ in range(dificuldade)] for _ in range(dificuldade)]
     for linha in range(len(quadrante_original)):
@@ -108,7 +107,6 @@ if __name__ == "__main__":
     quadrante = alfabeto(dificul_escolhida,numero_letra)
     time.sleep(5)
     print('\033c', end='')
-    
     while True:
         vetor_com_letras += ler_entrada(quadrante)
         esconde_matriz(quadrante,vetor_com_letras)
