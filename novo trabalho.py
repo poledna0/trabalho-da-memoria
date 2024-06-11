@@ -3,17 +3,23 @@
 import random
 import time
 
-def pop_pobre(lista, elemento):
-    nova_lista = []
-    for item in lista:
-        if item != elemento:
-            nova_lista.append(item)
-    return nova_lista
+def loop_imprimir(tabuleiro):
+    for linha in range(len(tabuleiro)):
+        for coluna in range(len(tabuleiro)):
+            print(tabuleiro[linha][coluna],' ', end='')
+        print('')
+        
+def pop_pobre(lista, elemento, indice, qual_pop):
+    if qual_pop == 1:
+        nova_lista = []
+        for item in lista:
+            if item != elemento:
+                nova_lista.append(item)
+        return nova_lista
+    else:
+        nova_lista = lista[:indice] + lista[indice+1:]
+        return nova_lista
 
-def meu_pop(lista, indice):
-    lista[indice]
-    nova_lista = lista[:indice] + lista[indice+1:]
-    return nova_lista
 
 def faz_o_quadrante(dificuldade, alfabeto_copia):
     quadrante_original = [[ 0 for _ in range(dificuldade)] for _ in range(dificuldade)]
@@ -22,7 +28,7 @@ def faz_o_quadrante(dificuldade, alfabeto_copia):
             if len(alfabeto_copia) > 0:
                 indice_aleatorio_quadrante = random.randint(0,(len(alfabeto_copia)-1))
                 quadrante_original[linha][coluna] = alfabeto_copia[indice_aleatorio_quadrante]
-                alfabeto_copia = meu_pop(alfabeto_copia,indice_aleatorio_quadrante)
+                alfabeto_copia = pop_pobre(alfabeto_copia,0,indice_aleatorio_quadrante,2)
             print(quadrante_original[linha][coluna],' ', end='')
         print('')
     return quadrante_original
@@ -34,13 +40,11 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
         indice_aleatorio = random.randint(0,len(alfabeto_original)-1)
         letra_aleatoria = chr(alfabeto_original[indice_aleatorio])
         alfabeto_aleatorio.append(letra_aleatoria)
-        alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio])
+        alfabeto_original = pop_pobre(alfabeto_original,alfabeto_original[indice_aleatorio],0,1)
     alfabeto_aleatorio += alfabeto_aleatorio
-
     return alfabeto_aleatorio
 
 def alfabeto (dificuldade, quantidade_de_letra):
-    
     if dificuldade == 4 or dificuldade == 6:
         vet = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
         somavet = faz_o_quadrante(dificuldade, vet)
@@ -60,7 +64,6 @@ def ler_entrada(tabu):
         print('')
         vetor_ind.append(linha_entrada)
         vetor_ind.append(coluna_entrada)
-######################"Faz isso em C para vc ver oq acontece.... python é uma merda mesmo" - Andre , maio-2024###############################################################################
     if vetor_ind[0] == vetor_ind[2] and vetor_ind[1] == vetor_ind[3]:
         print('Não pode ser a mesma posição')
     else:
@@ -74,18 +77,12 @@ def esconde_matriz(tabuleiro, vetor_com_letrinhas):
         for c in range(len(tabuleiro)):
             if tabuleiro[l][c] in vetor_com_letrinhas:
                 tabuleiro_escondido[l][c] = tabuleiro[l][c]
-    for linha in range(len(tabuleiro_escondido)):
-        for coluna in range(len(tabuleiro_escondido)):
-            print(tabuleiro_escondido[linha][coluna], ' ', end='')
-        print(' ')        
+    loop_imprimir(tabuleiro_escondido)        
 
 def socorro(variavel,tabuleiro):
     entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
     if entrada == 1:
-        for linha in range(len(tabuleiro)):
-            for coluna in range(len(tabuleiro)):
-                print(tabuleiro[linha][coluna],' ', end='')
-            print('')
+        loop_imprimir(tabuleiro)
         time.sleep(3)
         variavel += 1
     return variavel   
@@ -93,7 +90,7 @@ def socorro(variavel,tabuleiro):
 def desisti():
     desistir = int(input('Deseja desistir?\n[1] Sim\n[2] Não\n>>>'))
     if desistir == 1:
-        print('Fim de Joggo')
+        print('Fim de Jogo')
         return True
     else:
         return False
