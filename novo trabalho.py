@@ -3,13 +3,16 @@
 import random
 import time
 
+#Printa o tabuleiro
 def loop_imprimir(tabuleiro):
     for linha in range(len(tabuleiro)):
         for coluna in range(len(tabuleiro)):
             print(tabuleiro[linha][coluna],' ', end='')
         print('')
-        
+
+#Pop de indice e de valor
 def pop_pobre(lista, elemento, indice, qual_pop):
+    
     if qual_pop == 1:
         nova_lista = []
         for item in lista:
@@ -19,19 +22,21 @@ def pop_pobre(lista, elemento, indice, qual_pop):
     else:
         nova_lista = lista[:indice] + lista[indice+1:]
         return nova_lista
-    
+
+
 def faz_o_quadrante(dificuldade, alfabeto_copia):
+    #Fazendo a matriz de acordo com a dificuldade utilizando o "0" para preencher os indices
     quadrante_original = [[ 0 for _ in range(dificuldade)] for _ in range(dificuldade)]
     for linha in range(len(quadrante_original)):
-        for coluna in range(len(quadrante_original)):
-            if len(alfabeto_copia) > 0:
-                indice_aleatorio_quadrante = random.randint(0,(len(alfabeto_copia)-1))
-                quadrante_original[linha][coluna] = alfabeto_copia[indice_aleatorio_quadrante]
-                alfabeto_copia = pop_pobre(alfabeto_copia,0,indice_aleatorio_quadrante,2)
-            print(quadrante_original[linha][coluna],' ', end='')
-        print('')
+        for coluna in range(len(quadrante_original)):   
+            indice_aleatorio_quadrante = random.randint(0,(len(alfabeto_copia)-1))
+            quadrante_original[linha][coluna] = alfabeto_copia[indice_aleatorio_quadrante]
+            alfabeto_copia = pop_pobre(alfabeto_copia,0,indice_aleatorio_quadrante,2)
+        print(quadrante_original[linha][coluna],' ', end='')
+    print('')
     return quadrante_original
 
+#Cria a sequencia/aleatoriedade do Tabuleiro "Original"
 def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
     alfabeto_original = list(range(65,91))
     alfabeto_aleatorio = []
@@ -43,7 +48,9 @@ def alfabeto_aleatorios (dificuldade, quantidade_de_letra):
     alfabeto_aleatorio += alfabeto_aleatorio
     return alfabeto_aleatorio
 
-def alfabeto (dificuldade, quantidade_de_letra):
+#Cria o Tableiro "Original"
+#MUDAR NOME PARA "CRIAR_MATRIZ"
+def criar_matriz (dificuldade, quantidade_de_letra):
     if dificuldade == 4 or dificuldade == 6:
         vet = alfabeto_aleatorios(dificuldade, quantidade_de_letra)
         somavet = faz_o_quadrante(dificuldade, vet)
@@ -53,8 +60,10 @@ def alfabeto (dificuldade, quantidade_de_letra):
         vet += ['0','0','1','1','2','2','3','3','4','4','5','5']
         somavet = faz_o_quadrante(dificuldade, vet)
     return somavet
-        
-def ler_entrada(tabu):
+
+#Ler/Verificar input do usuario
+## MUDAR NOME PARA "ATUALIZA"
+def atualiza(tabu):
     vetor_ind = []
     vetor_let = []
     for _ in range(2):
@@ -70,6 +79,8 @@ def ler_entrada(tabu):
             vetor_let.append(tabu[vetor_ind[0]][vetor_ind[1]])
     return vetor_let
 
+#IF IN
+#
 def esconde_matriz(tabuleiro, vetor_com_letrinhas): 
     tabuleiro_escondido = [['#' for _ in range(len(tabuleiro))] for _ in range(len(tabuleiro))]
     for l in range(len(tabuleiro)):
@@ -78,14 +89,16 @@ def esconde_matriz(tabuleiro, vetor_com_letrinhas):
                 tabuleiro_escondido[l][c] = tabuleiro[l][c]
     loop_imprimir(tabuleiro_escondido)        
 
-def socorro(variavel,tabuleiro):
+#Dica
+#MUDAR NOME PARA EXIB_RESP
+def exibir_resp(variavel,tabuleiro):
     entrada = int(input('Você quer ajuda?\nPodemos mostrar o tabuleiro por 5 segundos.\n[1] Sim\n[2] Não\n>>>'))
     if entrada == 1:
         loop_imprimir(tabuleiro)
         time.sleep(3)
         variavel += 1
     return variavel   
-
+#FF
 def desisti():
     desistir = int(input('Deseja desistir?\n[1] Sim\n[2] Não\n>>>'))
     if desistir == 1:
@@ -93,8 +106,7 @@ def desisti():
         return True
     else:
         return False
-
-#COMENTAROIO
+   
 if __name__ == "__main__":
     escolhendo_a_dificulade =int(input('Digite a dificulade:\n[1] Fácil\n[2] Médio\n[3] Hardcore\n>>>'))
     vetor_com_letras = []
@@ -105,14 +117,14 @@ if __name__ == "__main__":
         dificul_escolhida, numero_letra = 6 , 18
     else:        
         dificul_escolhida, numero_letra = 8 , 32
-    quadrante = alfabeto(dificul_escolhida,numero_letra)
+    quadrante = criar_matriz(dificul_escolhida,numero_letra)
     time.sleep(5)
     print('\033c', end='')
     while True:
-        vetor_com_letras += ler_entrada(quadrante)
+        vetor_com_letras += atualiza(quadrante)
         esconde_matriz(quadrante,vetor_com_letras)
         if contador_de_ajuda < 3: 
-            contador_de_ajuda += socorro(contador_de_ajuda,quadrante)
+            contador_de_ajuda += exibir_resp(contador_de_ajuda,quadrante)
             print('\033c', end='')
             esconde_matriz(quadrante,vetor_com_letras)
         if len(vetor_com_letras) == numero_letra:
