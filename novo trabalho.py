@@ -93,7 +93,8 @@ def desisti():
         return True
     else:
         return False
-   
+
+#COMENTAROIO
 if __name__ == "__main__":
     escolhendo_a_dificulade =int(input('Digite a dificulade:\n[1] Fácil\n[2] Médio\n[3] Hardcore\n>>>'))
     vetor_com_letras = []
